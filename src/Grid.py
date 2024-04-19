@@ -2,9 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def normalize_rotate_vector(v):
+    """ Normalizes a vector and rotates it by 90 degrees to create a normal to the input vector. """
     return np.array([v[1], -v[0]])/np.linalg.norm(v)
 
 def calculate_area(a, b, c, d):
+    """ Calculates the area of a polygon defined by the gridpoints a, b, c and d using the Shoelace fomula. """
     x = [a[0], b[0], c[0], d[0]]
     y = [a[1], b[1], c[1], d[1]]
     
@@ -74,23 +76,7 @@ class lattice():
                 point.subpoints[6] = (c[i] + c[neighbours[6]])/2
                 point.subpoints[7] = (c[i] + c[neighbours[6]] + c[neighbours[7]] + c[neighbours[0]])/4
                 
-            #elif point.gridpoint_type == 1:
-            #    neighbours = point.neighbours
-            #    
-            #    point.subpoints[0] = (c[i] + c[neighbours[0]])/2
-            #    point.subpoints[1] = (c[i] + c[neighbours[0]] + c[neighbours[1]] + c[neighbours[2]])/4
-            #    point.subpoints[2] = (c[i] + c[neighbours[2]])/2
-            #    point.subpoints[3] = (c[i] + c[neighbours[2]] + c[neighbours[3]] + c[neighbours[4]])/4
-            #    point.subpoints[4] = (c[i] + c[neighbours[4]])/2
-            #    point.subpoints[5] = (c[i] + c[neighbours[4]] + c[neighbours[5]] + c[neighbours[6]])/4
-            #    point.subpoints[6] = (c[i] + c[neighbours[6]])/2
-            #    point.subpoints[7] = (c[i] + c[neighbours[6]] + c[neighbours[7]] + c[neighbours[0]])/4
-            #    
-            #    for i in range(8):
-            #        if point.subpoints[i][0] > self.Lx/2:
-            #            point.subpoints[i][0] -= self.Lx/2
-            #        if point.subpoints[i][1] > self.Ly/2:
-            #            point.subpoints[i][1] -= self.Ly/2
+
     
     def set_lengths(self):
         for i, point in enumerate(self.grid.flatten('F')):
@@ -143,7 +129,6 @@ class lattice():
                 point.areas[2] = calculate_area(c, point.subpoints[4], point.subpoints[5], point.subpoints[6])
                 point.areas[3] = calculate_area(c, point.subpoints[6], point.subpoints[7], point.subpoints[0])
 
-        
     
     def grid_index(self):
         return np.array([obj.index for obj in self.grid.flatten('F')])
@@ -187,7 +172,6 @@ class lattice():
                         uu = (self.grid[i, j].vx)**2 + (self.grid[i, j].vy)**2
                         self.grid[i, j].f[q] = self.wi[q] * self.grid[i, j].rho * (1 + 3.0/2.0 * vu + 9.0/2.0 * vu2 - 3.0/2.0 * uu)
                         self.fi[i, j, q] = self.wi[q] * self.grid[i, j].rho * (1 + 3.0/2.0 * vu + 9.0/2.0 * vu2 - 3.0/2.0 * uu)
-        return f_eq
             
             
 #    def iterate(self):
